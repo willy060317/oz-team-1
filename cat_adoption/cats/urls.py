@@ -1,7 +1,8 @@
 from django.urls import path
-from . import views
+from .views import index, cat_create, health_record_create  # CatHealthRecordView 대신 health_record_create 사용
 
 urlpatterns = [
-    path('', views.index, name='index'),  # /cats/ 경로에 대한 기본 뷰
-    path('<str:name>/create/', views.cat_create, name='cat-create'),  # /cats/<name>/create/ 경로
+    path('', index, name='cat-index'),  # GET 모든 Cat 목록
+    path('cats/<str:name>/', cat_create, name='cat-create'),  # POST로 Cat 생성
+    path('cats/<int:cat_id>/health-record/', health_record_create, name='cat-health-record'),  # POST로 건강 기록 추가
 ]

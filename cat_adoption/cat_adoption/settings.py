@@ -1,19 +1,14 @@
 import os
 from pathlib import Path
+from dotenv import load_dotenv
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+load_dotenv()
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'X7k9p2mQ8vL3xY5zA1bC4dE6fG9hJ2iK5lM8nP0qR3sT6uW9vX2yZ4aB7cD0eF3g'  # 무작위 키로 대체하세요
-
-# SECURITY WARNING: don't run with debug turned on in production!
+SECRET_KEY = 'X7k9p2mQ8vL3xY5zA1bC4dE6fG9hJ2iK5lM8nP0qR3sT6uW9vX2yZ4aB7cD0eF3g'
 DEBUG = True
-
 ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 
-# Database
-# https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
@@ -26,16 +21,16 @@ DATABASES = {
     }
 }
 
-S3 설정 (아직 키가 없으므로 주석 처리)
-AWS_ACCESS_KEY_ID = 'REDACTED'  # 실제 AWS 액세스 키로 교체
-AWS_SECRET_ACCESS_KEY = 'REDACTED'  # 실제 AWS 시크릿 키로 교체
-AWS_STORAGE_BUCKET_NAME = 'cat-adoption-bucke'
+# S3 설정
+# settings.py
+
+AWS_ACCESS_KEY_ID = 'REDACTED'
+AWS_SECRET_ACCESS_KEY = 'REDACTED'
+AWS_STORAGE_BUCKET_NAME = 'cat-adoption-bucket'
 AWS_S3_REGION_NAME = 'ap-northeast-2'
 AWS_S3_FILE_OVERWRITE = False
 AWS_QUERYSTRING_AUTH = False
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
-
-# Application definition
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -43,17 +38,17 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'cats',  # 사용자 정의 앱
+    'cats',
     'storages',
-    'rest_framework',  # REST API 지원
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',  # 세션 처리
+    'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',  # 인증 처리
+    'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
@@ -77,15 +72,7 @@ TEMPLATES = [
 ROOT_URLCONF = 'cat_adoption.urls'
 WSGI_APPLICATION = 'cat_adoption.wsgi.application'
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/5.2/howto/static-files/
 STATIC_URL = '/static/'
-
-# Media files (for file uploads, temporary use until S3 is set up)
 MEDIA_ROOT = BASE_DIR / 'media'
 MEDIA_URL = '/media/'
-
-# Add this to your urls.py for media serving in development
-# from django.conf import settings
-# from django.conf.urls.static import static
-# urlpatterns = [your_patterns_here] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+APPEND_SLASH = True
