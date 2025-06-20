@@ -24,13 +24,15 @@ DATABASES = {
 # S3 설정
 # settings.py
 
-AWS_ACCESS_KEY_ID = 'REDACTED'
-AWS_SECRET_ACCESS_KEY = 'REDACTED'
-AWS_STORAGE_BUCKET_NAME = 'cat-adoption-bucket'
-AWS_S3_REGION_NAME = 'ap-northeast-2'
-AWS_S3_FILE_OVERWRITE = False
-AWS_QUERYSTRING_AUTH = False
-DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+from decouple import config
+
+AWS_ACCESS_KEY_ID = config('AWS_ACCESS_KEY_ID')
+AWS_SECRET_ACCESS_KEY = config('AWS_SECRET_ACCESS_KEY')
+AWS_STORAGE_BUCKET_NAME = config('AWS_STORAGE_BUCKET_NAME')
+AWS_S3_REGION_NAME = config('AWS_S3_REGION_NAME')
+AWS_S3_FILE_OVERWRITE = config('AWS_S3_FILE_OVERWRITE', default=False, cast=bool)
+AWS_QUERYSTRING_AUTH = config('AWS_QUERYSTRING_AUTH', default=False, cast=bool)
+DEFAULT_FILE_STORAGE = config('DEFAULT_FILE_STORAGE')
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
